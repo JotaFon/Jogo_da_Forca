@@ -1,25 +1,35 @@
 const express = require('express');
 const app = express();
+const PORT = 3000;
 
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public/css'));
 
-const words = [
-  'cachorro', 'pato', 'gato', 'elefante', 'leão', 'tigre', 'girafa', 'macaco', 'coelho',
-  'cavalo', 'zebra', 'leopardo', 'rinoceronte', 'veado', 'lobo', 'tartaruga', 'peixe', 'cobra'
-];
+const themes = {
+  animais: ['cachorro', 'pato', 'gato', 'elefante', 'leão', 'tigre', 'girafa', 'macaco'],
+  comida: ['pizza', 'hambúrguer', 'sorvete', 'macarrão', 'batata', 'lasanha', 'sushi', 'chocolate']
+};
 
 let wrongGuesses = 5;
+let heartsRemaining = 5;
 let maskedWord = '';
 let word = '';
 let usedLetters = [];
 let usedLettersString = '';
+let theme = 'animais';
+
+function getRandomTheme() {
+  const themeKeys = Object.keys(themes);
+  const randomIndex = Math.floor(Math.random() * themeKeys.length);
+  return themeKeys[randomIndex];
+}
 
 function getRandomWord() {
-  const randomIndex = Math.floor(Math.random() * words.length);
-  return words[randomIndex];
+  const themeWords = themes[theme];
+  const randomIndex = Math.floor(Math.random() * themeWords.length);
+  return themeWords[randomIndex];
 }
 
 function maskWord(word) {
@@ -30,9 +40,9 @@ app.get('/', (req, res) => {
   const playAgain = req.query.playAgain === 'true';
 
   if (playAgain) {
-    wrongGuesses = 5;
+    heartsRemaining = 5;
   }
-
+  theme = getRandomTheme();
   word = getRandomWord();
   maskedWord = maskWord(word);
 
@@ -49,8 +59,10 @@ app.get('/', (req, res) => {
     usedLettersString,
     gameOver,
     gameOverMessage,
+    heartsRemaining,
+    playAgain,
     wrongGuesses,
-    playAgain
+    theme
   });
 });
 
@@ -82,31 +94,37 @@ app.post('/', (req, res) => {
         gameOverMessage = 'Parabéns, você acertou!';
       }
     } else {
-      wrongGuesses--;
+      heartsRemaining--;
     }
   }
 
-  if (gameOver) {
-    res.render('index', {
-      word,
-      maskedWord,
-      usedLetters,
-      usedLettersString,
-      gameOver,
-      gameOverMessage,
-      wrongGuesses,
-      playAgain: true
-    });
+  if (heartsRemaining === 0) {
+    gameOver = true;
+    gameOverMessage = 'Você perdeu!';
+  }
+
+  res.render('index', {
+    word,
+    maskedWord,
+    usedLetters,
+    usedLettersString,
+    gameOver,
+    gameOverMessage,
+    wrongGuesses,
+    heartsRemaining,
+    theme
+  });
+  }
+);
+app.get('/change-theme/:newTheme', (req, res) => {
+  const newTheme = req.params.newTheme;
+
+  if (themes[newTheme]) {
+    theme = newTheme;
+    word = getRandomWord();
+    res.redirect('/');
   } else {
-    res.render('index', {
-      word,
-      maskedWord,
-      usedLetters,
-      usedLettersString,
-      gameOver,
-      gameOverMessage,
-      wrongGuesses
-    });
+    res.status(404).send('Tema não encontrado.');
   }
 });
 
@@ -128,21 +146,15 @@ app.get('/reset', (req, res) => {
     usedLettersString,
     gameOver,
     gameOverMessage,
-    wrongGuesses
+    wrongGuesses,
+    theme
   });
 });
 
-
-function getRandomWord() {
-  const randomIndex = Math.floor(Math.random() * words.length);
-  return words[randomIndex];
+try {
+  app.listen(PORT, () => {
+    console.log(`Esse servidor está rodando em http://localhost:${PORT}`);
+  });
+} catch (error) {
+  console.error('Erro ao iniciar o servidor:', error);
 }
-
-function maskWord(word) {
-  return word.replace(/./g, '*');
-}
-
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Esse servidor está rodando em http://localhost:${PORT}`);
-});

@@ -8,19 +8,24 @@
     <title>Jogo da Forca</title>
 </head>
 <body>
-    <h1>Jogo da Forca</h1>
+    <h1>Jogo da forca</h1>
+    <div class="container">
+    <p class="tema"><br>Tema:</br> <%= theme %></p>
   <p>Adivinhe a palavra:</p>
-  <p><%= maskedWord %></p>
-  <p>Letras utilizadas: <%= usedLettersString %></p>
-  <p>Letras erradas: <%= wrongGuesses %></p>
+  <p class="palavra"><%= maskedWord %></p>
+  <p><br>Letras utilizadas:</br><%= usedLettersString %></p>
   <form action="/" method="POST">
-    <input type="text" name="guess" placeholder="Digite uma letra">
-    <button type="submit">Enviar</button>
+    <input type="text" name="guess" placeholder="Digite uma letra" class="box">
   </form>
   <% if (gameOver) { %>
     <p>O jogo acabou!</p>
     <p><%= gameOverMessage %></p>
     <a href="/?playAgain=true">Jogar Novamente</a>
   <% } %>
+  <% for (let i = 0; i < heartsRemaining; i++) { %>
+    <img src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/03-9.png" alt="Coração do Minecraft" id="coracao"  width="40">
+  <% } %>
+    <br></br>
+</div>
 </body>
 </html>

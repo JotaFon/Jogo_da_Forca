@@ -1,8 +1,26 @@
 body{
     background-color: antiquewhite;
     text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
   h1{
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
+  }
+  .container{
+    background-color: rgb(203, 162, 13);
+    border-radius: 10px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .palavra{
+    font-size: 150%;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold
+  }
+  .tema{
+    font-size: large;
+    font-weight: bold
   }
