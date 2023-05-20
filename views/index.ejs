@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Jogo da Forca</title>
+</head>
+<body>
+    <h1>Jogo da Forca</h1>
+  <p>Adivinhe a palavra:</p>
+  <p><%= maskedWord %></p>
+  <p>Letras utilizadas: <%= usedLettersString %></p>
+  <p>Letras erradas: <%= wrongGuesses %></p>
+  <form action="/" method="POST">
+    <input type="text" name="guess" placeholder="Digite uma letra">
+    <button type="submit">Enviar</button>
+  </form>
+  <% if (gameOver) { %>
+    <p>O jogo acabou!</p>
+    <p><%= gameOverMessage %></p>
+    <a href="/?playAgain=true">Jogar Novamente</a>
+  <% } %>
+</body>
+</html>
