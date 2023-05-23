@@ -7,20 +7,53 @@ body{
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
   }
+  .palavra-correta{
+    font-size: large;
+    font-weight: bold;
+  }
+  .advinhe{
+    text-shadow: 
+    -0.5px -0.5px 0px antiquewhite, 
+    -0.5px 0.5px 0px antiquewhite,                    
+     0.5px -0.5px 0px antiquewhite,                  
+     0.5px 0px 0px antiquewhite;
+     font-size: large;
+     font-weight: bold;
+  }
   .container{
     background-color: rgb(203, 162, 13);
     border-radius: 10px;
     width: 20%;
     margin-left: auto;
     margin-right: auto;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
   }
   .palavra{
     font-size: 150%;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: bold
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    background-color: aliceblue;
   }
   .tema{
     font-size: large;
     font-weight: bold
   }
+  .tema-container{
+    display: inline-block;
+  }
+  .emoji{
+    max-width:80px;
+    max-height:50px;
+    width: auto;
+    height: auto;
+  }
+  .emoji-container{
+    display: inline-block;
+  }
+
+
+

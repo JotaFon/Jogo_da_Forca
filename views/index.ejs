@@ -9,23 +9,45 @@
 </head>
 <body>
     <h1>Jogo da forca</h1>
+
     <div class="container">
-    <p class="tema"><br>Tema:</br> <%= theme %></p>
-  <p>Adivinhe a palavra:</p>
-  <p class="palavra"><%= maskedWord %></p>
-  <p><br>Letras utilizadas:</br><%= usedLettersString %></p>
-  <form action="/" method="POST">
-    <input type="text" name="guess" placeholder="Digite uma letra" class="box">
-  </form>
-  <% if (gameOver) { %>
-    <p>O jogo acabou!</p>
-    <p><%= gameOverMessage %></p>
-    <a href="/?playAgain=true">Jogar Novamente</a>
-  <% } %>
-  <% for (let i = 0; i < heartsRemaining; i++) { %>
-    <img src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/03-9.png" alt="Coração do Minecraft" id="coracao"  width="40">
-  <% } %>
-    <br></br>
-</div>
+      <br></br>
+      <p class="advinhe">Adivinhe a palavra:</p>
+      <div class="tema-container"><p class="tema">Tema:</br> <%= tema %></p>
+      </div>
+      <div class="emoji-container"><p><% if (tema === 'Animais') {
+        %><img src="https://em-content.zobj.net/thumbs/120/openmoji/338/dog-face_1f436.png" class="emoji">
+        <% } else if (tema === 'Comidas') { %>
+          <img src="https://em-content.zobj.net/thumbs/120/openmoji/338/pizza_1f355.png" class="emoji">
+        <% } else if (tema === 'Países') { %>
+          <img src="https://em-content.zobj.net/thumbs/120/openmoji/338/flag-brazil_1f1e7-1f1f7.png" class="emoji">
+        <% } else if (tema === 'Filmes') { %>
+          <img src="https://em-content.zobj.net/thumbs/120/openmoji/338/movie-camera_1f3a5.png" class="emoji">
+        <% } else if (tema === 'Esportes') { %>
+          <img src="https://em-content.zobj.net/thumbs/120/openmoji/338/soccer-ball_26bd.png" class="emoji">
+        <%
+       } %></p>
+        </div>
+      <p class="palavra"><%= letraSecreta %></p>
+      <p><br>Letras utilizadas:</br><%= letraUsadaString %></p>
+      <form action="/" method="POST">
+        <input type="text" name="guess" placeholder="Digite uma letra" class="box"  <% if (Fim) { %> disabled <% } %>>
+      </form>
+      <% if (Fim) { %>
+      <p><%= FimMensagem %></p>
+      <%if(coracoes === 0){ %>
+        <div class="palavra-correta">
+          A palavra era:</br>
+           <%= palavraCerta %>
+        </div> 
+      <% } %>
+      <a href="/?jogarNovamente=true">Jogar Novamente</a>
+      <% } %>
+      <% for (let i = 0; i < coracoes; i++) { %>
+      <img src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/03-9.png" alt="Coração do Minecraft" id="coracao"  width="40">
+      <% } %>
+      <br></br>
+  </div>
+
 </body>
 </html>
